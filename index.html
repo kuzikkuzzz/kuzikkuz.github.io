@@ -35,17 +35,19 @@
             position: relative;
         }
 
-        /* Arka Plan Video Konumu ve Ayarları */
+        /* Arka Plan Videosu ve Ayarları */
         .bg-video {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
             z-index: -2;
-            /* Videoyu siyah-beyaz yapmak ve biraz karartmak için filtre */
-            filter: grayscale(100%) contrast(120%) brightness(35%);
+            object-fit: cover;
+            filter: grayscale(100%) contrast(130%) brightness(30%);
         }
 
         /* Videonun üzerindeki karartma / doku katmanı */
@@ -55,7 +57,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
             z-index: -1;
             pointer-events: none;
         }
@@ -101,7 +103,7 @@
             letter-spacing: 1px;
         }
 
-        /* Hakkında Kartı (Glassmorphism efektiyle) */
+        /* Hakkında Kartı */
         .about-card {
             background: rgba(10, 10, 10, 0.75);
             backdrop-filter: blur(10px);
@@ -169,13 +171,13 @@
         .footer {
             margin-top: 35px;
             font-size: 11px;
-            color: var(--muted-com, #888888);
+            color: #888888;
             letter-spacing: 1px;
             text-shadow: 0 2px 5px rgba(0,0,0,0.8);
         }
 
         /* Animasyonlar */
-        @keyframes fadeIn {
+  @keyframes fadeIn {
             from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
@@ -188,10 +190,9 @@
 </head>
 <body>
 
-    <!-- Arka Plan Videosu ve Örtüsü -->
-    <video class="bg-video" autoplay muted loop playsinline>
+    <!-- Arka Plan Videosu -->
+    <video class="bg-video" autoplay muted loop playsinline preload="auto">
         <source src="background.mp4" type="video/mp4">
-        Tarayıcınız video etiketini desteklemiyor.
     </video>
     <div class="bg-overlay"></div>
 
@@ -236,5 +237,18 @@
         </div>
     </div>
 
+    <script>
+        // Tarayıcı autoplay engeline takılırsa herhangi bir tıklamada videoyu zorla oynatır
+        document.addEventListener('DOMContentLoaded', () => {
+            const video = document.querySelector('video');
+            if (video) {
+                video.play().catch(() => {
+                    document.addEventListener('click', () => {
+                        video.play();
+                    }, { once: true });
+                });
+            }
+        });
+    </script>
 </body>
 </html>
