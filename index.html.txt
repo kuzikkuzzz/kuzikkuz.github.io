@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kuzikkuz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050505;
+            --text-color: #ffffff;
+            --border-color: rgba(255, 255, 255, 0.2);
+            --hover-border: #ffffff;
+            --hover-bg: rgba(255, 255, 255, 0.9);
+            --hover-text: #000000;
+            --muted-color: #aaaaaa;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Space Mono', monospace;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Arka Plan Video Konumu ve Ayarları */
+        .bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: -2;
+            /* Videoyu siyah-beyaz yapmak ve biraz karartmak için filtre */
+            filter: grayscale(100%) contrast(120%) brightness(35%);
+        }
+
+        /* Videonun üzerindeki karartma / doku katmanı */
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+            text-align: center;
+            animation: fadeIn 0.8s ease-in-out;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Avatar */
+        .avatar-box {
+            width: 80px;
+            height: 80px;
+            border: 1px solid #ffffff;
+            border-radius: 50%;
+            margin: 0 auto 18px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            animation: pulseGlow 3s infinite alternate;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 4px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+
+        .handle {
+            font-size: 12px;
+            color: var(--muted-color);
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        /* Hakkında Kartı (Glassmorphism efektiyle) */
+        .about-card {
+            background: rgba(10, 10, 10, 0.75);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            border-radius: 6px;
+            text-align: left;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            color: #dddddd;
+        }
+
+        .about-card .tag {
+            color: var(--muted-color);
+            font-size: 11px;
+            display: block;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Linkler Listesi */
+        .links-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .link-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 18px;
+            border: 1px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+
+        .link-item:hover {
+            border-color: var(--hover-border);
+            background-color: var(--hover-bg);
+            color: var(--hover-text);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .link-item span {
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--muted-color);
+            transition: color 0.2s;
+        }
+
+        .link-item:hover span {
+            color: #444444;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 35px;
+            font-size: 11px;
+            color: var(--muted-com, #888888);
+            letter-spacing: 1px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+        }
+
+        /* Animasyonlar */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 5px rgba(255,255,255,0.1); }
+            100% { box-shadow: 0 0 15px rgba(255,255,255,0.3); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Arka Plan Videosu ve Örtüsü -->
+    <video class="bg-video" autoplay muted loop playsinline>
+        <source src="background.mp4" type="video/mp4">
+        Tarayıcınız video etiketini desteklemiyor.
+    </video>
+    <div class="bg-overlay"></div>
+
+    <div class="container">
+        <!-- Profil İkonu -->
+        <div class="avatar-box">K</div>
+        
+        <h1>kuzikkuz</h1>
+        <div class="handle">@kuzikkuz</div>
+
+        <!-- Hakkımda Bilgileri -->
+        <div class="about-card">
+            <span class="tag">// bio</span>
+            <p>my irl name is kuzey, im 15. social media to know about me is listed below</p>
+        </div>
+
+        <!-- Sosyal Medya Linkleri -->
+        <div class="links-list">
+            <!-- Instagram -->
+            <a href="https://instagram.com/kuzeyn13" target="_blank" class="link-item">
+                Instagram <span>@kuzeyn13</span>
+            </a>
+
+            <!-- TikTok -->
+            <a href="https://tiktok.com/@kuzikkuzisnotproud" target="_blank" class="link-item">
+                TikTok <span>@kuzikkuzisnotproud</span>
+            </a>
+
+            <!-- Twitter / X -->
+            <a href="https://twitter.com/kuz1kkuzz" target="_blank" class="link-item">
+                Twitter <span>@kuz1kkuzz</span>
+            </a>
+
+            <!-- Discord -->
+            <a href="#" onclick="navigator.clipboard.writeText('@yagmurvarella'); alert('Discord kullanıcı adı kopyalandı: @yagmurvarella'); return false;" class="link-item">
+                Discord <span>@yagmurvarella</span>
+            </a>
+        </div>
+
+        <div class="footer">
+            [ kuzikkuz // 2026 ]
+        </div>
+    </div>
+
+</body>
+</html>
